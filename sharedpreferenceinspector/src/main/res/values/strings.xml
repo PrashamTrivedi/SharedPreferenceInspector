@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SharedPreferenceInspector</string>
+    <string name="action_debug">Debug</string>
+    <string name="action_test_mode_enter">Enter test mode</string>
+    <string name="action_test_mode_exit">Exit test mode</string>
+
+    <string-array name="types">
+        <item>String</item>
+        <item>Int</item>
+        <item>Long</item>
+        <item>Boolean</item>
+        <item>Float</item>
+    </string-array>
+
+    <string name="title_activity_shared_prefs_browser">SharedPrefsBrowser</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
