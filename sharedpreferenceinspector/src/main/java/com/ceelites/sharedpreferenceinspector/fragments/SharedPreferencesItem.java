@@ -11,6 +11,9 @@ import android.text.Editable;
 import android.text.InputType;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Prasham on 25-01-2015.
+ * Lists all the shared preferences stored in a given shared preference file. Created by Prasham on 25-01-2015.
  */
 public class SharedPreferencesItem
 		extends ListFragment
@@ -38,6 +41,7 @@ public class SharedPreferencesItem
 	private String prefName;
 	private PrefsAdapter prefsAdapter;
 	private int typePosition = 0;
+	private MenuItem testMode;
 
 	/**
 	 * Instantiates new fragment.
@@ -59,6 +63,37 @@ public class SharedPreferencesItem
 		setHasOptionsMenu(true);
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_shared_preference_browser, menu);
+		testMode = menu.findItem(R.id.action_testmode);
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if (!preferenceUtils.getBoolean(testModeOpened, false)) {
+			testMode.setTitle(R.string.action_test_mode_enter);
+		} else {
+			testMode.setTitle(R.string.action_test_mode_exit);
+
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		if (id == R.id.action_testmode) {
+			getActivity().supportInvalidateOptionsMenu();
+			changeTestMode();
+
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
 	/**
 	 * Callback method to be invoked when an item in this AdapterView has been clicked.
 	 * <p/>
@@ -76,6 +111,11 @@ public class SharedPreferencesItem
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		String cancel = "Cancel";
+		/**
+		 * Checks if entered in test mode. If not, clicking on preferences will prompt user to enter test mode first. If already entered in
+		 * test mode,
+		 * it will present the UI to change the value. Once it's changed, it will store original value
+		 */
 		if (preferenceUtils.getBoolean(testModeOpened, false)) {
 			final Pair<String, Object> keyValue = (Pair<String, Object>) parent.getItemAtPosition(position);
 			AlertDialog.Builder builder = new Builder(getActivity());
@@ -190,6 +230,12 @@ public class SharedPreferencesItem
 		}
 	}
 
+	/**
+	 * Store original value before it's changed in test mode. It will take care not to over write if original value is already stored.
+	 *
+	 * @param keyValue
+	 * 		: Pair of key and original value.
+	 */
 	private void storeOriginal(Pair<String, Object> keyValue) {
 		String key = SharedPreferenceUtils.keyTestMode + keyValue.first;
 
@@ -199,10 +245,16 @@ public class SharedPreferencesItem
 		}
 	}
 
+	/**
+	 * Refresh key values.
+	 */
 	private void refreshKeyValues() {
 		prefsAdapter.setKeyValues(getKeyValues());
 	}
 
+	/**
+	 * Toggle test modes. If test mode is already open, it will restore the original data before toggling.
+	 */
 	private void changeTestMode() {
 		boolean testMode = preferenceUtils.getBoolean(testModeOpened, false);
 		if (testMode) {
@@ -211,6 +263,11 @@ public class SharedPreferencesItem
 		preferenceUtils.putBoolean(testModeOpened, !testMode);
 	}
 
+	/**
+	 * Get Key value pair for given shared preference files
+	 *
+	 * @return : Pair of key value files from given shared preferences.
+	 */
 	private ArrayList<Pair<String, ?>> getKeyValues() {
 		ArrayList<Pair<String, ?>> keyValPair = new ArrayList<>();
 		Map<String, ?> map = preferenceUtils.getAll();
@@ -225,6 +282,9 @@ public class SharedPreferencesItem
 		return keyValPair;
 	}
 
+	/**
+	 * Restore values of original keys stored.
+	 */
 	private void restoreData() {
 		Map<String, ?> map = preferenceUtils.getAll();
 		Set<String> strings = map.keySet();
@@ -258,6 +318,5 @@ public class SharedPreferencesItem
 		setListAdapter(prefsAdapter);
 		preferencesList.setOnItemClickListener(this);
 	}
-
 
 }

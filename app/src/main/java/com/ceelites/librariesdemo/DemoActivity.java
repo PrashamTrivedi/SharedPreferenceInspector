@@ -28,7 +28,9 @@ public class DemoActivity
 	}
 
 	public void debug(View view) {
-		SharedPreferenceUtils.startAcvitivy(this);
+		if (BuildConfig.DEBUG) {
+			SharedPreferenceUtils.startAcvitivy(this);
+		}
 	}
 
 
@@ -36,7 +38,9 @@ public class DemoActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_demo, menu);
-		prefsUtils.inflateDebugMenu(getMenuInflater(), menu);
+		if (BuildConfig.DEBUG) {
+			prefsUtils.inflateDebugMenu(getMenuInflater(), menu);
+		}
 		return true;
 	}
 
