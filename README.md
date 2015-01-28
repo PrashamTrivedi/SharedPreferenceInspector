@@ -11,7 +11,7 @@ debugCompile {gradle credentials coming soon}
 ```
 
 ## Code
-Declare this activity in menifest
+Declare this activity in menifest.
 
 ```xml
 <activity android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"/>
@@ -51,11 +51,15 @@ SharedPreferenceInspector has a unique feature called test mode, where you can c
 1. From menu. Where you can enter the tests mode
 2. If you are not in test mode and try to click on the row, it will ask you to enter test mode to change the value.
 
-The test mode values are stored in shared preference keys **untill you exit test mode**. 
+The test mode values are stored in shared preference keys **until you exit test mode**.
 
 # Support
 This library gives support from api level 10. And It has been tested in a GingerBread device.
 
-# Known Issues
-1. Not implemented handling String Set. 
-2. Uploading maven. 
+# Credits
+Credits to [Android DbInspector Library](https://github.com/infinum/android_dbinspector) for all the inspiration behind this library.
+
+# Known Issues And TODOs
+-[ ] Not implemented handling String Set.
+-[ ] Does not have UI to clear that key.
+-[x] Upload in maven (Credentials coming soon).
