@@ -6,12 +6,13 @@ Provides a simple way to see shared preferences and edit them for test. No need 
 ## Gradle
 Add this library as dependency to your project's ```build.gradle```
 
+
 ```groovy
-debugCompile {gradle credentials coming soon}
+debugCompile com.github.prashamtrivedi:sharedpreferenceinspector:1.0.0
 ```
 
 ## Code
-Declare this activity in menifest.
+Declare this activity in your debug menifest.
 
 ```xml
 <activity android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"/>
@@ -60,6 +61,8 @@ This library gives support from api level 10. And It has been tested in a Ginger
 Credits to [Android DbInspector Library](https://github.com/infinum/android_dbinspector) for all the inspiration behind this library.
 
 # Known Issues And TODOs
--[ ] Not implemented handling String Set.
--[ ] Does not have UI to clear that key.
--[x] Upload in maven (Credentials coming soon).
+
+ -[ ] Not implemented handling String Set.
+ -[ ] Does not have UI to clear that key.
+ -[x] Upload in maven.
+ -[ ] Change example to reflect read me instructions
