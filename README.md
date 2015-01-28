@@ -62,7 +62,7 @@ Credits to [Android DbInspector Library](https://github.com/infinum/android_dbin
 
 # Known Issues And TODOs
 
- -[] Not implemented handling String Set.
- -[] Does not have UI to clear that key.
- -[x] Upload in maven.
- -[] Change example to reflect read me instructions
+- [ ] Not implemented handling String Set.
+- [ ] Does not have UI to clear that key.
+- [x] Upload in maven.
+- [ ] Change example to reflect read me instructions
