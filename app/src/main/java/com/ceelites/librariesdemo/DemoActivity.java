@@ -2,25 +2,23 @@ package com.ceelites.librariesdemo;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.ceelites.sharedpreferenceinspector.Utils.SharedPreferenceUtils;
 
 
 public class DemoActivity
 		extends ActionBarActivity {
 
-	private SharedPreferenceUtils prefsUtils;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo);
-
-		prefsUtils = SharedPreferenceUtils.initWith(this, null);
-		prefsUtils.putString("Test", "Done");
+		SharedPreferences defualtPref = PreferenceManager.getDefaultSharedPreferences(this);
+		defualtPref.edit().putString("Test", "Done").commit();
 
 		SharedPreferences anotherPref = getSharedPreferences("Prasham", MODE_PRIVATE);
 		anotherPref.edit().putString("Test", "Love you life").commit();
@@ -28,9 +26,7 @@ public class DemoActivity
 	}
 
 	public void debug(View view) {
-		if (BuildConfig.DEBUG) {
-			SharedPreferenceUtils.startAcvitivy(this);
-		}
+		LocalDataProvider.startActivity(this);
 	}
 
 
@@ -38,9 +34,8 @@ public class DemoActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_demo, menu);
-		if (BuildConfig.DEBUG) {
-			prefsUtils.inflateDebugMenu(getMenuInflater(), menu);
-		}
+		LocalDataProvider.inflateMenu(this, getMenuInflater(), menu);
+
 		return true;
 	}
 
@@ -50,7 +45,7 @@ public class DemoActivity
 		int id = item.getItemId();
 
 
-		if (!prefsUtils.isDebugHandled(this, item)) {
+		if (!LocalDataProvider.isDebugHandled(this, item)) {
 			if (id == R.id.action_settings) {
 				return true;
 			}

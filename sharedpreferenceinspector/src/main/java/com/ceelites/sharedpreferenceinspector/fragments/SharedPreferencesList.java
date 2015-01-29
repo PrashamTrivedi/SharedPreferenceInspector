@@ -11,8 +11,7 @@ import com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser;
 import java.io.File;
 
 /**
- * This fragment reads shared prefs directory in device memory and lists all shared preferences files.
- * Created by Prasham on 25-01-2015.
+ * This fragment reads shared prefs directory in device memory and lists all shared preferences files. Created by Prasham on 25-01-2015.
  */
 public class SharedPreferencesList
 		extends ListFragment {
@@ -41,8 +40,7 @@ public class SharedPreferencesList
 			 * If exists and is directory, get the list.
 			 */
 			final String[] list = sharedPrefsDir.list();
-			ArrayAdapter<String> adapter =
-					new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, android.R.id.text1, list);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, list);
 			lists.setAdapter(adapter);
 			setListAdapter(adapter);
 

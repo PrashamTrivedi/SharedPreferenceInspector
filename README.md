@@ -8,7 +8,7 @@ Add this library as dependency to your project's ```build.gradle```
 
 
 ```groovy
-debugCompile com.github.prashamtrivedi:sharedpreferenceinspector:1.0.0
+debugCompile 'com.github.prashamtrivedi:sharedpreferenceinspector:1.0.1'
 ```
 
 ## Code
@@ -17,6 +17,7 @@ Declare this activity in your debug menifest.
 ```xml
 <activity android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"/>
 ```
+Don't forget to **Provide appropriate theme** to that activity. It's needed to inflate menus.
 
 To launch this activity you have two ways.
 
@@ -42,7 +43,7 @@ If this method returns `true` activity will open itself. Otherwise you have to h
 Just Call.
 ```java
 if (BuildConfig.DEBUG) {
-			SharedPreferenceUtils.startAcvitivy(this);
+			SharedPreferenceUtils.startActivity(this);
 }
 ```
 
@@ -63,6 +64,6 @@ Credits to [Android DbInspector Library](https://github.com/infinum/android_dbin
 # Known Issues And TODOs
 
 - [ ] Not implemented handling String Set.
-- [ ] Does not have UI to clear that key.
+- [ ] Does not have UI to clear the key.
 - [x] Upload in maven.
-- [ ] Change example to reflect read me instructions
+- [x] Change example to reflect read me instructions

@@ -91,8 +91,12 @@ public class PrefsAdapter
 		}
 
 		holder.key.setText(keyVal.first);
+		String value = "";
 		Object second = keyVal.second;
-		holder.value.setText(second.toString() + " (" + second.getClass().getSimpleName() + ")");
+		if (second != null) {
+			value = second.toString() + " (" + second.getClass().getSimpleName() + ")";
+		}
+		holder.value.setText(value);
 
 		return convertView;
 	}

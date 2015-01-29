@@ -165,7 +165,7 @@ public class SharedPreferenceUtils {
 	public boolean isDebugHandled(Context context, MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_debug) {
-			startAcvitivy(context);
+			startActivity(context);
 			return true;
 		}
 		return false;
@@ -177,7 +177,7 @@ public class SharedPreferenceUtils {
 	 * @param context
 	 * 		: : context to start activity.
 	 */
-	public static void startAcvitivy(Context context) {
+	public static void startActivity(Context context) {
 		context.startActivity(new Intent(context, SharedPrefsBrowser.class));
 	}
 
