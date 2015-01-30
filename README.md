@@ -1,6 +1,11 @@
 # SharedPreferenceInspector
 Provides a simple way to see shared preferences and edit them for test. No need to pull shared preferences. Just some simple clicks to see the values stored. Also with test mode to change the values and check the behavior of the app.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SharedPreferenceInspector-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1447)
+
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector)
+
 # Usage
 
 ## Gradle
@@ -28,8 +33,8 @@ To do it, Initiate `SharedPreferenceUtils` with `SharedPreferenceUtils.initWith(
 In `onCreateOptionsMenu()` call 
 ```java
 if (BuildConfig.DEBUG) {
-			prefsUtils.inflateDebugMenu(getMenuInflater(), menu);
-		}
+	prefsUtils.inflateDebugMenu(getMenuInflater(), menu);
+}
 ```
 
 In `onOptionsItemSelected()` method check value of `isDebugHandled` method 
@@ -43,7 +48,7 @@ If this method returns `true` activity will open itself. Otherwise you have to h
 Just Call.
 ```java
 if (BuildConfig.DEBUG) {
-			SharedPreferenceUtils.startActivity(this);
+	SharedPreferenceUtils.startActivity(this);
 }
 ```
 
