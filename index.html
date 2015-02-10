@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Sharedpreferenceinspector by PrashamTrivedi</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/PrashamTrivedi/SharedPreferenceInspector">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Sharedpreferenceinspector</h1>
+            <h2>Android Library to inspect shared preferences.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="sharedpreferenceinspector" class="anchor" href="#sharedpreferenceinspector" aria-hidden="true"><span class="octicon octicon-link"></span></a>SharedPreferenceInspector</h1>
+
+<p>Provides a simple way to see shared preferences and edit them for test. No need to pull shared preferences. Just some simple clicks to see the values stored. Also with test mode to change the values and check the behavior of the app.</p>
+
+<p><a href="https://android-arsenal.com/details/1/1447"><img src="https://img.shields.io/badge/Android%20Arsenal-SharedPreferenceInspector-brightgreen.svg?style=flat" alt="Android Arsenal"></a></p>
+
+<p><a href="https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector"><img src="https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector/badge.svg" alt="Maven Central"></a></p>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a id="gradle" class="anchor" href="#gradle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradle</h2>
+
+<p>Add this library as dependency to your project's <code>build.gradle</code></p>
+
+<div class="highlight highlight-groovy"><pre>debugCompile <span class="pl-s1"><span class="pl-pds">'</span>com.github.prashamtrivedi:sharedpreferenceinspector:1.0.1<span class="pl-pds">'</span></span></pre></div>
+
+<h2>
+<a id="code" class="anchor" href="#code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code</h2>
+
+<p>Declare this activity in your debug menifest.</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">activity</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser<span class="pl-pds">"</span></span>/&gt;</pre></div>
+
+<p>Don't forget to <strong>Provide appropriate theme</strong> to that activity. It's needed to inflate menus.</p>
+
+<p>To launch this activity you have two ways.</p>
+
+<ol>
+<li>From the menu.</li>
+</ol>
+
+<p>To do it, Initiate <code>SharedPreferenceUtils</code> with <code>SharedPreferenceUtils.initWith()</code> call.</p>
+
+<p>In <code>onCreateOptionsMenu()</code> call </p>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-stj">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
+    prefsUtils<span class="pl-k">.</span>inflateDebugMenu(getMenuInflater(), menu);
+}</pre></div>
+
+<p>In <code>onOptionsItemSelected()</code> method check value of <code>isDebugHandled</code> method </p>
+
+<div class="highlight highlight-java"><pre>prefsUtils<span class="pl-k">.</span>isDebugHandled(<span class="pl-v">this</span>, item)) </pre></div>
+
+<p>If this method returns <code>true</code> activity will open itself. Otherwise you have to handle menu generation code yourselves.</p>
+
+<ol>
+<li>Launch the activity directly </li>
+</ol>
+
+<p>Just Call.</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-stj">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
+    <span class="pl-stj">SharedPreferenceUtils</span><span class="pl-k">.</span>startActivity(<span class="pl-v">this</span>);
+}</pre></div>
+
+<h1>
+<a id="test-mode" class="anchor" href="#test-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Mode</h1>
+
+<p>SharedPreferenceInspector has a unique feature called test mode, where you can change your already stored shared preference value to any supported value and check how your app behaves with this change. While you are in the <strong>test mode</strong> your original value is kept safe and when you exit it, the original value will be restored. There are two ways to enter the test mode.</p>
+
+<ol>
+<li>From menu. Where you can enter the tests mode</li>
+<li>If you are not in test mode and try to click on the row, it will ask you to enter test mode to change the value.</li>
+</ol>
+
+<p>The test mode values are stored in shared preference keys <strong>until you exit test mode</strong>.</p>
+
+<h1>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h1>
+
+<p>This library gives support from api level 10. And It has been tested in a GingerBread device.</p>
+
+<h1>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h1>
+
+<p>Credits to <a href="https://github.com/infinum/android_dbinspector">Android DbInspector Library</a> for all the inspiration behind this library.</p>
+
+<h1>
+<a id="known-issues-and-todos" class="anchor" href="#known-issues-and-todos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Known Issues And TODOs</h1>
+
+<ul>
+<li>[ ] Not implemented handling String Set.</li>
+<li>[ ] Does not have UI to clear the key.</li>
+<li>[x] Upload in maven.</li>
+<li>[x] Change example to reflect read me instructions</li>
+</ul>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<pre><code>   Copyright 2015 Prasham Trivedi
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+</code></pre>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/PrashamTrivedi">PrashamTrivedi</a> can be found on <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-44864459-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
