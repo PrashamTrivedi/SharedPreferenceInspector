@@ -7,9 +7,12 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
+import android.support.v4.util.Pair;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.text.Editable;
 import android.text.InputType;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -90,8 +93,83 @@ public class SharedPreferencesItem
 			changeTestMode();
 
 		}
+		if (id == R.id.action_search) {
+			SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+			searchView.setQueryHint(getString(R.string.searchHint));
+			searchView.setOnQueryTextListener(new OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextSubmit(String s) {
+					search(s);
+					return true;
+				}
+
+				@Override
+				public boolean onQueryTextChange(String s) {
+					search(s);
+					return true;
+				}
+			});
+		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Toggle test modes. If test mode is already open, it will restore the original data before toggling.
+	 */
+	private void changeTestMode() {
+		boolean testMode = preferenceUtils.getBoolean(testModeOpened, false);
+		if (testMode) {
+			restoreData();
+		}
+		preferenceUtils.putBoolean(testModeOpened, !testMode);
+	}
+
+	private void search(String s) {
+		prefsAdapter.getFilter().filter(s);
+	}
+
+	/**
+	 * Restore values of original keys stored.
+	 */
+	private void restoreData() {
+		Map<String, ?> map = preferenceUtils.getAll();
+		Set<String> strings = map.keySet();
+
+		for (String string : strings) {
+			if (string.startsWith(SharedPreferenceUtils.keyTestMode)) {
+				preferenceUtils.restoreKey(string);
+			}
+		}
+
+		refreshKeyValues();
+
+	}
+
+	/**
+	 * Refresh key values.
+	 */
+	private void refreshKeyValues() {
+		prefsAdapter.setKeyValues(getKeyValues());
+	}
+
+	/**
+	 * Get Key value pair for given shared preference files
+	 *
+	 * @return : Pair of key value files from given shared preferences.
+	 */
+	private ArrayList<Pair<String, ?>> getKeyValues() {
+		ArrayList<Pair<String, ?>> keyValPair = new ArrayList<>();
+		Map<String, ?> map = preferenceUtils.getAll();
+		Set<String> strings = map.keySet();
+		Object value;
+		for (String key : strings) {
+			if (!key.contains(SharedPreferenceUtils.keyTestMode)) {
+				value = map.get(key);
+				keyValPair.add(new Pair<String, Object>(key, value));
+			}
+		}
+		return keyValPair;
 	}
 
 	/**
@@ -243,60 +321,6 @@ public class SharedPreferencesItem
 			preferenceUtils.put(key, keyValue.second);
 
 		}
-	}
-
-	/**
-	 * Refresh key values.
-	 */
-	private void refreshKeyValues() {
-		prefsAdapter.setKeyValues(getKeyValues());
-	}
-
-	/**
-	 * Toggle test modes. If test mode is already open, it will restore the original data before toggling.
-	 */
-	private void changeTestMode() {
-		boolean testMode = preferenceUtils.getBoolean(testModeOpened, false);
-		if (testMode) {
-			restoreData();
-		}
-		preferenceUtils.putBoolean(testModeOpened, !testMode);
-	}
-
-	/**
-	 * Get Key value pair for given shared preference files
-	 *
-	 * @return : Pair of key value files from given shared preferences.
-	 */
-	private ArrayList<Pair<String, ?>> getKeyValues() {
-		ArrayList<Pair<String, ?>> keyValPair = new ArrayList<>();
-		Map<String, ?> map = preferenceUtils.getAll();
-		Set<String> strings = map.keySet();
-		Object value;
-		for (String key : strings) {
-			if (!key.contains(SharedPreferenceUtils.keyTestMode)) {
-				value = map.get(key);
-				keyValPair.add(new Pair<String, Object>(key, value));
-			}
-		}
-		return keyValPair;
-	}
-
-	/**
-	 * Restore values of original keys stored.
-	 */
-	private void restoreData() {
-		Map<String, ?> map = preferenceUtils.getAll();
-		Set<String> strings = map.keySet();
-
-		for (String string : strings) {
-			if (string.startsWith(SharedPreferenceUtils.keyTestMode)) {
-				preferenceUtils.restoreKey(string);
-			}
-		}
-
-		refreshKeyValues();
-
 	}
 
 	@Override

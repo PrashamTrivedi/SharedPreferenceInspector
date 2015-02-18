@@ -1,26 +1,34 @@
 package com.ceelites.sharedpreferenceinspector;
 
 import android.content.Context;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
+import com.ceelites.sharedpreferenceinspector.Utils.SharedPreferenceUtils;
 import java.util.ArrayList;
 
 /**
  * Created by Prasham on 12-01-2015.
  */
 public class PrefsAdapter
-		extends BaseAdapter {
+		extends BaseAdapter
+		implements Filterable {
 
 	private final LayoutInflater inflater;
+
 	private ArrayList<Pair<String, ?>> keyValSet;
+
+	private ArrayList<Pair<String, ?>> filteredCollection;
 
 	public PrefsAdapter(Context context, ArrayList<Pair<String, ?>> keyValSet) {
 
 		this.keyValSet = keyValSet;
+		this.filteredCollection = keyValSet;
 		inflater = LayoutInflater.from(context);
 	}
 
@@ -31,7 +39,7 @@ public class PrefsAdapter
 	 */
 	@Override
 	public int getCount() {
-		return keyValSet.size();
+		return filteredCollection.size();
 	}
 
 	/**
@@ -44,7 +52,7 @@ public class PrefsAdapter
 	 */
 	@Override
 	public Pair<String, ?> getItem(int position) {
-		return keyValSet.get(position);
+		return filteredCollection.get(position);
 	}
 
 	/**
@@ -90,9 +98,9 @@ public class PrefsAdapter
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.key.setText(keyVal.first);
-		String value = "";
-		Object second = keyVal.second;
+        holder.key.setText(keyVal.first);
+        String value = "";
+        Object second = keyVal.second;
 		if (second != null) {
 			value = second.toString() + " (" + second.getClass().getSimpleName() + ")";
 		}
@@ -101,13 +109,73 @@ public class PrefsAdapter
 		return convertView;
 	}
 
+	/**
+	 * <p>Returns a filter that can be used to constrain data with a filtering
+	 * pattern.</p>
+	 *
+	 * <p>This method is usually implemented by {@link android.widget.Adapter}
+	 * classes.</p>
+	 *
+	 * @return a filter used to constrain data
+	 */
+	@Override
+	public Filter getFilter() {
+		Filter filter = new Filter() {
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				ArrayList<Pair<String, ?>> filteredPrefs = new ArrayList<Pair<String, ?>>();
+				FilterResults filterFriends = new FilterResults();
+				if (!SharedPreferenceUtils.isEmptyString(constraint)) {
+					for (Pair<String, ?> keyValue : keyValSet) {
+						String constraintString = constraint.toString();
+						String prefixKey = "key: ";
+						String prefixValue = "value: ";
+						String first = keyValue.first;
+						Object second = keyValue.second;
+						if (constraintString.toLowerCase().startsWith(prefixKey)) {
+							if (first.toLowerCase().contains(constraintString.toLowerCase().substring(prefixKey.length()))) {
+								filteredPrefs.add(keyValue);
+							}
+						} else if (constraintString.toLowerCase().startsWith(prefixValue)) {
+							if (second != null) {
+								if (second.toString().contains(constraintString.toLowerCase().substring(prefixValue.length()))) {
+									filteredPrefs.add(keyValue);
+								}
+							}
+						} else {
+							if (first.equalsIgnoreCase(constraintString) || (second != null && second.toString()
+							                                                                         .equalsIgnoreCase(constraintString))) {
+								filteredPrefs.add(keyValue);
+							}
+						}
+					}
+				} else {
+					filteredPrefs = keyValSet;
+				}
+				filterFriends.count = filteredPrefs.size();
+				filterFriends.values = filteredPrefs;
+				return filterFriends;
+			}
+
+			@Override
+			protected void publishResults(CharSequence constraint, FilterResults results) {
+				filteredCollection = (ArrayList<Pair<String, ?>>) results.values;
+
+				notifyDataSetChanged();
+			}
+		};
+		return filter;
+	}
+
 	public void setKeyValues(ArrayList<Pair<String, ?>> keyValues) {
 		this.keyValSet = keyValues;
 		notifyDataSetChanged();
 	}
 
 	class ViewHolder {
+
 		TextView key;
+
 		TextView value;
 	}
 }

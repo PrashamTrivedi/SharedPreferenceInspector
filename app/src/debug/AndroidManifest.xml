@@ -9,8 +9,7 @@
             android:theme="@style/AppTheme">
 
         <activity
-                android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"
-                android:theme="@style/AppTheme"/>
+                android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"/>
     </application>
 
 </manifest>
