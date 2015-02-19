@@ -10,7 +10,7 @@
 
     <Button
             android:onClick="debug"
-            android:text="@string/action_debug"
+            android:text="Debug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

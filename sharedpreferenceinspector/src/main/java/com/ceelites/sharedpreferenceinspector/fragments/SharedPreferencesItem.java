@@ -95,20 +95,22 @@ public class SharedPreferencesItem
 		}
 		if (id == R.id.action_search) {
 			SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-			searchView.setQueryHint(getString(R.string.searchHint));
-			searchView.setOnQueryTextListener(new OnQueryTextListener() {
-				@Override
-				public boolean onQueryTextSubmit(String s) {
-					search(s);
-					return true;
-				}
+			if (searchView != null) {
+				searchView.setQueryHint(getString(R.string.searchHint));
+				searchView.setOnQueryTextListener(new OnQueryTextListener() {
+					@Override
+					public boolean onQueryTextSubmit(String s) {
+						search(s);
+						return true;
+					}
 
-				@Override
-				public boolean onQueryTextChange(String s) {
-					search(s);
-					return true;
-				}
-			});
+					@Override
+					public boolean onQueryTextChange(String s) {
+						search(s);
+						return true;
+					}
+				});
+			}
 		}
 
 		return super.onOptionsItemSelected(item);
