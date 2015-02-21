@@ -23,7 +23,7 @@ Declare this activity in your debug menifest.
 ```xml
 <activity android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"/>
 ```
-Don't forget to **Provide appropriate theme** to that activity. It's needed to inflate menus.
+Don't forget to **Provide appropriate theme** *(Any Child of `Theme.AppCompat` is recommended)* to that activity. It's needed to inflate menus.
 
 To launch this activity you have two ways.
 
