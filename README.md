@@ -65,12 +65,16 @@ The test mode values are stored in shared preference keys **until you exit test 
 This library gives support from api level 10. And It has been tested in a GingerBread device.
 
 # ChangeLog
+
 ## 1.2
 - Added Clear Key
+
 ## 1.1
 - Added Search Menu to search by key and value
+
 ## 1.0.1
 - Some bugfixes and moved to ActionBar Activity
+
 ## 1.0.0
 - Initial Version.
 
