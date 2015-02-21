@@ -290,7 +290,16 @@ public class SharedPreferencesItem
 					//TODO: Hell nothing right now.
 				}
 			};
-			builder.setTitle("Change Value").setView(editView).setPositiveButton("Set", listener1).setNegativeButton(cancel, listener2).show();
+			OnClickListener clearListener = new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					storeOriginal(keyValue);
+					preferenceUtils.clear(keyValue.first);
+					refreshKeyValues();
+				}
+			};
+			builder.setTitle("Change Value").setView(editView).setPositiveButton("Set", listener1).setNegativeButton(cancel, listener2)
+			       .setNeutralButton("Clear", clearListener).show();
 		} else {
 			AlertDialog.Builder builder = new Builder(getActivity());
 			builder.setTitle("Test mode not enabled")

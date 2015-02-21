@@ -169,6 +169,7 @@ public class PrefsAdapter
 
 	public void setKeyValues(ArrayList<Pair<String, ?>> keyValues) {
 		this.keyValSet = keyValues;
+		this.filteredCollection = keyValues;
 		notifyDataSetChanged();
 	}
 

@@ -319,10 +319,12 @@ public class SharedPreferenceUtils {
 	 * 		: Key whose value is to be restored
 	 */
 	public void restoreKey(String key) {
-		String originalKey = key.substring(keyTestMode.length());
-		Object value = get(key);
-		put(originalKey, value);
-		clear(key);
+		if (!key.equalsIgnoreCase("test_mode_opened")) {
+			String originalKey = key.substring(keyTestMode.length());
+			Object value = get(key);
+			put(originalKey, value);
+			clear(key);
+		}
 	}
 
 	/**

@@ -13,8 +13,9 @@ Add this library as dependency to your project's ```build.gradle```
 
 
 ```groovy
-debugCompile 'com.github.prashamtrivedi:sharedpreferenceinspector:1.0.1'
+debugCompile 'com.github.prashamtrivedi:sharedpreferenceinspector:{latestVersion}'
 ```
+Where latest version can be found from above (Maven Central Badge)
 
 ## Code
 Declare this activity in your debug menifest.
@@ -63,13 +64,23 @@ The test mode values are stored in shared preference keys **until you exit test 
 # Support
 This library gives support from api level 10. And It has been tested in a GingerBread device.
 
+# ChangeLog
+## 1.2
+- Added Clear Key
+## 1.1
+- Added Search Menu to search by key and value
+## 1.0.1
+- Some bugfixes and moved to ActionBar Activity
+## 1.0.0
+- Initial Version.
+
 # Credits
 Credits to [Android DbInspector Library](https://github.com/infinum/android_dbinspector) for all the inspiration behind this library.
 
 # Known Issues And TODOs
 
 - [ ] Not implemented handling String Set.
-- [ ] Does not have UI to clear the key.
+- [x] Does not have UI to clear the key.
 - [x] Upload in maven.
 - [x] Change example to reflect read me instructions
 
