@@ -11,14 +11,13 @@ Provides a simple way to see shared preferences and edit them for test. No need 
 ## Gradle
 Add this library as dependency to your project's ```build.gradle```
 
-
 ```groovy
 debugCompile 'com.github.prashamtrivedi:sharedpreferenceinspector:{latestVersion}'
 ```
 Where latest version can be found from above (Maven Central Badge)
 
 ## Code
-### Applies on Version 1.x, in upcoming versions the activity will be added automatically from library with appropriate themes.
+### If you are using version 1.x.
 Declare this activity in your debug menifest.
 
 ```xml
@@ -26,11 +25,17 @@ Declare this activity in your debug menifest.
 ```
 Don't forget to **Provide appropriate theme** *(Any Child of `Theme.AppCompat` is recommended)* to that activity. It's needed to inflate menus.
 
+### If you are using version 2.0 and above
+
+Just import the library. Library will take care of adding activity.
+
 To launch the SharedPrefsBrowser activity you have two ways.
 
 1. From the menu.
-
-To do it, Initiate `SharedPreferenceUtils` with `SharedPreferenceUtils.initWith()` call.
+2. Launch the activity directly 
+ 
+### To Launch the activity from menu
+Initiate `SharedPreferenceUtils` with `SharedPreferenceUtils.initWith()` call.
 
 In `onCreateOptionsMenu()` call 
 ```java
@@ -45,8 +50,7 @@ prefsUtils.isDebugHandled(this, item))
 ```
 If this method returns `true` activity will open itself. Otherwise you have to handle menu generation code yourselves.
 
-2. Launch the activity directly 
-
+### To Launch the activity directly
 Just Call.
 ```java
 if (BuildConfig.DEBUG) {
@@ -70,7 +74,7 @@ If you are using proguard, you should add this line in your proguard file. In ca
 `-keep class android.support.v7.widget.SearchView { *; }`
 
 # ChangeLog
-## 2.0 (Will be out on maven central soon)
+## 2.0 
 - Added Activity from library manifest, You should not declare this activity in your app manifest.
 - If you are migrating from version 1.x you should simply remove the activity in your app manifest. If you want to keep some advanced attributes, you can use features of [manifest merger](http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger) the way you please
 - Added (primary) support for proguard. Feel free to open an issue if you find something missing in case of proguard.
