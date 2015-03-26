@@ -18,6 +18,7 @@ debugCompile 'com.github.prashamtrivedi:sharedpreferenceinspector:{latestVersion
 Where latest version can be found from above (Maven Central Badge)
 
 ## Code
+### Applies on Version 1.x, in upcoming versions the activity will be added automatically from library with appropriate themes.
 Declare this activity in your debug menifest.
 
 ```xml
@@ -25,7 +26,7 @@ Declare this activity in your debug menifest.
 ```
 Don't forget to **Provide appropriate theme** *(Any Child of `Theme.AppCompat` is recommended)* to that activity. It's needed to inflate menus.
 
-To launch this activity you have two ways.
+To launch the SharedPrefsBrowser activity you have two ways.
 
 1. From the menu.
 
@@ -64,7 +65,15 @@ The test mode values are stored in shared preference keys **until you exit test 
 # Support
 This library gives support from api level 10. And It has been tested in a GingerBread device.
 
+# Proguard Configuration
+If you are using proguard, you should add this line in your proguard file. In case of version 2.0 this line should be added automatically.
+`-keep class android.support.v7.widget.SearchView { *; }`
+
 # ChangeLog
+## 2.0 (Will be out on maven central soon)
+- Added Activity from library manifest, You should not declare this activity in your app manifest.
+- If you are migrating from version 1.x you should simply remove the activity in your app manifest. If you want to keep some advanced attributes, you can use features of [manifest merger](http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger) the way you please
+- Added (primary) support for proguard. Feel free to open an issue if you find something missing in case of proguard.
 
 ## 1.2
 - Added Clear Key
