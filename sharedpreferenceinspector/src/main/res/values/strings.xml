@@ -15,5 +15,6 @@
     </string-array>
 
     <string name="searchHint">Enter \"key: {Search Value}\"to search by key and \"value: {Search Value}\" to search by value</string>
+    <string name="enter_your_value_here">Enter your value here</string>
 
 </resources>
