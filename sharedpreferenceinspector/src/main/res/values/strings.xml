@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SharedPreferenceInspector</string>
     <string name="action_debug">Debug</string>
     <string name="action_search">Search</string>
     <string name="action_test_mode_enter">Enter test mode</string>
@@ -15,9 +14,6 @@
         <item>Float</item>
     </string-array>
 
-    <string name="title_activity_shared_prefs_browser">SharedPrefsBrowser</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="searchHint">Enter \"key: {Search Value}\"to search by key and \"value: {Search Value}\" to search by value</string>
 
 </resources>
