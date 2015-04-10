@@ -8,7 +8,7 @@
             android:id="@+id/value"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:hint="Enter your value here"
+            android:hint="@string/enter_your_value_here"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     <Spinner
