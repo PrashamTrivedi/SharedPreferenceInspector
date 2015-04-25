@@ -74,6 +74,10 @@ If you are using proguard, you should add this line in your proguard file. In ca
 `-keep class android.support.v7.widget.SearchView { *; }`
 
 # ChangeLog
+## 2.1
+- Code Cleanup (Credit @ggajews)
+- Added Support for new AppComat library 2.1
+
 ## 2.0 
 - Added Activity from library manifest, You should not declare this activity in your app manifest.
 - If you are migrating from version 1.x you should simply remove the activity in your app manifest. If you want to keep some advanced attributes, you can use features of [manifest merger](http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger) the way you please
