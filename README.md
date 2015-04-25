@@ -75,8 +75,8 @@ If you are using proguard, you should add this line in your proguard file. In ca
 
 # ChangeLog
 ## 2.1
-- Code Cleanup (Credit @ggajews)
-- Added Support for new AppComat library 2.1
+- Code Cleanup (Credit [@ggajews](https://github.com/ggajews) )
+- Added Support for new AppComat library 22.1
 
 ## 2.0 
 - Added Activity from library manifest, You should not declare this activity in your app manifest.
