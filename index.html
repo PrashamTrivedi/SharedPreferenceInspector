@@ -1,52 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <meta charset="UTF-8">
     <title>Sharedpreferenceinspector by PrashamTrivedi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <a id="forkme_banner" href="https://github.com/PrashamTrivedi/SharedPreferenceInspector">View on GitHub</a>
-    <div class="shell">
+    <section class="page-header">
+      <h1 class="project-name">Sharedpreferenceinspector</h1>
+      <h2 class="project-tagline">Android Library to inspect shared preferences.</h2>
+      <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector" class="btn">View on GitHub</a>
+      <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Sharedpreferenceinspector</h1>
-            <h2>Android Library to inspect shared preferences.</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
-
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
-
-
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="sharedpreferenceinspector" class="anchor" href="#sharedpreferenceinspector" aria-hidden="true"><span class="octicon octicon-link"></span></a>SharedPreferenceInspector</h1>
 
 <p>Provides a simple way to see shared preferences and edit them for test. No need to pull shared preferences. Just some simple clicks to see the values stored. Also with test mode to change the values and check the behavior of the app.</p>
@@ -63,28 +36,42 @@
 
 <p>Add this library as dependency to your project's <code>build.gradle</code></p>
 
-<div class="highlight highlight-groovy"><pre>debugCompile <span class="pl-s1"><span class="pl-pds">'</span>com.github.prashamtrivedi:sharedpreferenceinspector:1.0.1<span class="pl-pds">'</span></span></pre></div>
+<div class="highlight highlight-groovy"><pre>debugCompile <span class="pl-s"><span class="pl-pds">'</span>com.github.prashamtrivedi:sharedpreferenceinspector:{latestVersion}<span class="pl-pds">'</span></span></pre></div>
+
+<p>Where latest version can be found from above (Maven Central Badge)</p>
 
 <h2>
 <a id="code" class="anchor" href="#code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code</h2>
 
+<h3>
+<a id="if-you-are-using-version-1x" class="anchor" href="#if-you-are-using-version-1x" aria-hidden="true"><span class="octicon octicon-link"></span></a>If you are using version 1.x.</h3>
+
 <p>Declare this activity in your debug menifest.</p>
 
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">activity</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s1"><span class="pl-pds">"</span>com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser<span class="pl-pds">"</span></span>/&gt;</pre></div>
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">activity</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser<span class="pl-pds">"</span></span>/&gt;</pre></div>
 
-<p>Don't forget to <strong>Provide appropriate theme</strong> to that activity. It's needed to inflate menus.</p>
+<p>Don't forget to <strong>Provide appropriate theme</strong> <em>(Any Child of <code>Theme.AppCompat</code> is recommended)</em> to that activity. It's needed to inflate menus.</p>
 
-<p>To launch this activity you have two ways.</p>
+<h3>
+<a id="if-you-are-using-version-20-and-above" class="anchor" href="#if-you-are-using-version-20-and-above" aria-hidden="true"><span class="octicon octicon-link"></span></a>If you are using version 2.0 and above</h3>
+
+<p>Just import the library. Library will take care of adding activity.</p>
+
+<p>To launch the SharedPrefsBrowser activity you have two ways.</p>
 
 <ol>
 <li>From the menu.</li>
+<li>Launch the activity directly </li>
 </ol>
 
-<p>To do it, Initiate <code>SharedPreferenceUtils</code> with <code>SharedPreferenceUtils.initWith()</code> call.</p>
+<h3>
+<a id="to-launch-the-activity-from-menu" class="anchor" href="#to-launch-the-activity-from-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>To Launch the activity from menu</h3>
+
+<p>Initiate <code>SharedPreferenceUtils</code> with <code>SharedPreferenceUtils.initWith()</code> call.</p>
 
 <p>In <code>onCreateOptionsMenu()</code> call </p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-stj">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
+<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-smi">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
     prefsUtils<span class="pl-k">.</span>inflateDebugMenu(getMenuInflater(), menu);
 }</pre></div>
 
@@ -94,14 +81,13 @@
 
 <p>If this method returns <code>true</code> activity will open itself. Otherwise you have to handle menu generation code yourselves.</p>
 
-<ol>
-<li>Launch the activity directly </li>
-</ol>
+<h3>
+<a id="to-launch-the-activity-directly" class="anchor" href="#to-launch-the-activity-directly" aria-hidden="true"><span class="octicon octicon-link"></span></a>To Launch the activity directly</h3>
 
 <p>Just Call.</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-stj">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
-    <span class="pl-stj">SharedPreferenceUtils</span><span class="pl-k">.</span>startActivity(<span class="pl-v">this</span>);
+<div class="highlight highlight-java"><pre><span class="pl-k">if</span> (<span class="pl-smi">BuildConfig</span><span class="pl-c1"><span class="pl-k">.</span>DEBUG</span>) {
+    <span class="pl-smi">SharedPreferenceUtils</span><span class="pl-k">.</span>startActivity(<span class="pl-v">this</span>);
 }</pre></div>
 
 <h1>
@@ -122,6 +108,60 @@
 <p>This library gives support from api level 10. And It has been tested in a GingerBread device.</p>
 
 <h1>
+<a id="proguard-configuration" class="anchor" href="#proguard-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proguard Configuration</h1>
+
+<p>If you are using proguard, you should add this line in your proguard file. In case of version 2.0 this line should be added automatically.
+<code>-keep class android.support.v7.widget.SearchView { *; }</code></p>
+
+<h1>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a>ChangeLog</h1>
+
+<h2>
+<a id="21" class="anchor" href="#21" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1</h2>
+
+<ul>
+<li>Code Cleanup (Credit <a href="https://github.com/ggajews">@ggajews</a> )</li>
+<li>Added Support for new AppComat library 22.1</li>
+</ul>
+
+<h2>
+<a id="20" class="anchor" href="#20" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.0</h2>
+
+<ul>
+<li>Added Activity from library manifest, You should not declare this activity in your app manifest.</li>
+<li>If you are migrating from version 1.x you should simply remove the activity in your app manifest. If you want to keep some advanced attributes, you can use features of <a href="http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger">manifest merger</a> the way you please</li>
+<li>Added (primary) support for proguard. Feel free to open an issue if you find something missing in case of proguard.</li>
+</ul>
+
+<h2>
+<a id="12" class="anchor" href="#12" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2</h2>
+
+<ul>
+<li>Added Clear Key</li>
+</ul>
+
+<h2>
+<a id="11" class="anchor" href="#11" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1</h2>
+
+<ul>
+<li>Added Search Menu to search by key and value</li>
+</ul>
+
+<h2>
+<a id="101" class="anchor" href="#101" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.0.1</h2>
+
+<ul>
+<li>Some bugfixes and moved to ActionBar Activity</li>
+</ul>
+
+<h2>
+<a id="100" class="anchor" href="#100" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.0.0</h2>
+
+<ul>
+<li>Initial Version.</li>
+</ul>
+
+<h1>
 <a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h1>
 
 <p>Credits to <a href="https://github.com/infinum/android_dbinspector">Android DbInspector Library</a> for all the inspiration behind this library.</p>
@@ -131,7 +171,7 @@
 
 <ul>
 <li>[ ] Not implemented handling String Set.</li>
-<li>[ ] Does not have UI to clear the key.</li>
+<li>[x] Does not have UI to clear the key.</li>
 <li>[x] Upload in maven.</li>
 <li>[x] Change example to reflect read me instructions</li>
 </ul>
@@ -152,23 +192,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 </code></pre>
-      </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/PrashamTrivedi">PrashamTrivedi</a> can be found on <a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/PrashamTrivedi/SharedPreferenceInspector">Sharedpreferenceinspector</a> is maintained by <a href="https://github.com/PrashamTrivedi">PrashamTrivedi</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
-    </div>
+    </section>
 
-              <script type="text/javascript">
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -181,3 +214,4 @@
 
   </body>
 </html>
+
