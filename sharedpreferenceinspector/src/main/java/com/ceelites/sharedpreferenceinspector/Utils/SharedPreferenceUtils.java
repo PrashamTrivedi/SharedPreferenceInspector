@@ -21,6 +21,18 @@ public class SharedPreferenceUtils {
 	private static SharedPreferenceUtils sharedPreferenceUtils;
 	private SharedPreferences sharedPreferences;
 
+	public static final String STRING = "String";
+	public static final String INT = "Integer";
+	public static final String FLOAT = "Float";
+	public static final String LONG = "Long";
+	public static final String BOOLEAN = "Boolean";
+
+	public static final int SPINNER_STRING = 0;
+	public static final int SPINNER_INT = 1;
+	public static final int SPINNER_LONG = 2;
+	public static final int SPINNER_BOOLEAN = 3;
+	public static final int SPINNER_FLOAT = 4;
+
 	/**
 	 * Init SharedPreferenceUtils with SharedPreferences file
 	 *
@@ -102,10 +114,10 @@ public class SharedPreferenceUtils {
 	public static float getNumberFloat(CharSequence string) {
 		float number = 0.0f;
 		if (!isEmptyString(string)) {
-			if (TextUtils.isDigitsOnly(string)) {
+//			if (TextUtils.isDigitsOnly(string)) {
 
 				number = Float.parseFloat(string.toString());
-			}
+//			}
 		}
 		return number;
 	}

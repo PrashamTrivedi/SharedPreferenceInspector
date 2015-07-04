@@ -23,6 +23,9 @@ public class DemoActivity
 		SharedPreferences anotherPref = getSharedPreferences("Prasham", MODE_PRIVATE);
 		anotherPref.edit().putString("Test", "Love you life").commit();
 		anotherPref.edit().putInt("Test Int", 1138).commit();
+		anotherPref.edit().putFloat("Test Float", 11.38F).commit();
+		anotherPref.edit().putLong("Test Long", 113834).commit();
+		anotherPref.edit().putBoolean("Test Boolean", true).commit();
 	}
 
 	public void debug(View view) {
