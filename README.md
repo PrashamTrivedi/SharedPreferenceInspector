@@ -74,26 +74,7 @@ If you are using proguard, you should add this line in your proguard file. In ca
 `-keep class android.support.v7.widget.SearchView { *; }`
 
 # ChangeLog
-## 2.1
-- Code Cleanup (Credit [@ggajews](https://github.com/ggajews) )
-- Added Support for new AppComat library 22.1
-
-## 2.0 
-- Added Activity from library manifest, You should not declare this activity in your app manifest.
-- If you are migrating from version 1.x you should simply remove the activity in your app manifest. If you want to keep some advanced attributes, you can use features of [manifest merger](http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger) the way you please
-- Added (primary) support for proguard. Feel free to open an issue if you find something missing in case of proguard.
-
-## 1.2
-- Added Clear Key
-
-## 1.1
-- Added Search Menu to search by key and value
-
-## 1.0.1
-- Some bugfixes and moved to ActionBar Activity
-
-## 1.0.0
-- Initial Version.
+See ChangeLog.md
 
 # Credits
 Credits to [Android DbInspector Library](https://github.com/infinum/android_dbinspector) for all the inspiration behind this library.
