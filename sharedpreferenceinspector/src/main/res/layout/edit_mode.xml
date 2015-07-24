@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:gravity="center"
+              android:padding="8dp"
               android:layout_height="match_parent">
-    <EditText
-            android:id="@+id/value"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:hint="@string/enter_your_value_here"
+    <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent">
+        <EditText
+                android:id="@+id/value"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:hint="@string/enter_your_value_here"
+                android:layout_width="wrap_content"
+                tools:visibility="gone"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchBoolean"
+                android:gravity="center"
+                tools:visibility="visible"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </FrameLayout>
+
     <Spinner
             android:id="@+id/type"
             android:entries="@array/types"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 </LinearLayout>

@@ -3,6 +3,7 @@
         >
 
     <item
+            android:icon="@drawable/ic_action_debug"
             android:id="@+id/action_debug"
             android:title="@string/action_debug"
             android:orderInCategory="100"

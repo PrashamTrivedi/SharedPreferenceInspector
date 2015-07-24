@@ -113,11 +113,12 @@ public class SharedPreferenceUtils {
 	 */
 	public static float getNumberFloat(CharSequence string) {
 		float number = 0.0f;
-		if (!isEmptyString(string)) {
-//			if (TextUtils.isDigitsOnly(string)) {
-
+		try {
+			if (!isEmptyString(string)) {
 				number = Float.parseFloat(string.toString());
-//			}
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 		return number;
 	}
@@ -133,11 +134,15 @@ public class SharedPreferenceUtils {
 
 	public static long getNumberLong(CharSequence string) {
 		long number = 0l;
-		if (!isEmptyString(string)) {
-			if (TextUtils.isDigitsOnly(string)) {
+		try {
+			if (!isEmptyString(string)) {
+				if (TextUtils.isDigitsOnly(string)) {
 
-				number = Long.parseLong(string.toString());
+					number = Long.parseLong(string.toString());
+				}
 			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 		return number;
 	}
@@ -247,9 +252,10 @@ public class SharedPreferenceUtils {
 	 *
 	 * @return the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a String.
 	 *
+	 * @Throws ClassCastException : When a value exists in given key but it's not a string
 	 * @see android.content.SharedPreferences#getString(String, String)
 	 */
-	public String getString(String key, String defaultValue) {
+	public String getString(String key, String defaultValue) throws ClassCastException {
 
 		return sharedPreferences.getString(key, (defaultValue == null) ? "" : defaultValue);
 	}
@@ -264,12 +270,14 @@ public class SharedPreferenceUtils {
 	 *
 	 * @return the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not an int.
 	 *
+	 * @Throws ClassCastException : When a value exists in given key but it's not a integer
 	 * @see android.content.SharedPreferences#getInt(String, int)
 	 */
-	public int getInt(String key, int defaultValue) {
+	public int getInt(String key, int defaultValue) throws ClassCastException {
 
 		return sharedPreferences.getInt(key, defaultValue);
 	}
+
 
 	/**
 	 * Retrieve a long value from the preferences.
@@ -281,9 +289,10 @@ public class SharedPreferenceUtils {
 	 *
 	 * @return the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a long.
 	 *
+	 * @Throws ClassCastException : When a value exists in given key but it's not a long
 	 * @see android.content.SharedPreferences#getLong(String, long)
 	 */
-	public long getLong(String key, long defaultValue) {
+	public long getLong(String key, long defaultValue) throws ClassCastException {
 
 		return sharedPreferences.getLong(key, defaultValue);
 	}
@@ -298,10 +307,10 @@ public class SharedPreferenceUtils {
 	 *
 	 * @return the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a long.
 	 *
+	 * @Throws ClassCastException : When a value exists in given key but it's not a float
 	 * @see android.content.SharedPreferences#getFloat(String, float)
 	 */
-
-	public float getFloat(String key, float defaultValue) {
+	public float getFloat(String key, float defaultValue) throws ClassCastException {
 
 		return sharedPreferences.getFloat(key, defaultValue);
 	}
@@ -317,9 +326,10 @@ public class SharedPreferenceUtils {
 	 * @return the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a
 	 * boolean.
 	 *
+	 * @Throws ClassCastException : When a value exists in given key but it's not a boolean
 	 * @see android.content.SharedPreferences#getBoolean(String, boolean)
 	 */
-	public boolean getBoolean(String key, boolean defaultValue) {
+	public boolean getBoolean(String key, boolean defaultValue) throws ClassCastException {
 
 		return sharedPreferences.getBoolean(key, defaultValue);
 	}

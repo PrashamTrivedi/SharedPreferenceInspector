@@ -1,7 +1,6 @@
 package com.ceelites.sharedpreferenceinspector.fragments;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -20,16 +20,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import com.ceelites.devutils.ConstantMethods;
 import com.ceelites.sharedpreferenceinspector.PrefsAdapter;
 import com.ceelites.sharedpreferenceinspector.R;
 import com.ceelites.sharedpreferenceinspector.Utils.SharedPreferenceUtils;
@@ -45,14 +46,12 @@ public class SharedPreferencesItem
 		implements OnItemClickListener {
 
 	private final String testModeOpened = "test_mode_opened";
-	private final String[] trueFalse = new String[]{"true", "false"};
 	private SharedPreferenceUtils preferenceUtils;
-	private String prefName;
 	private PrefsAdapter prefsAdapter;
 	private int typePosition = 0;
 	private MenuItem testMode;
 
-    Toast toast;
+	Toast toast;
 
 	/**
 	 * Instantiates new fragment.
@@ -197,7 +196,7 @@ public class SharedPreferencesItem
 	 * 		The row id of the item that was clicked.
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 		String cancel = "Cancel";
 		/**
 		 * Checks if entered in test mode. If not, clicking on preferences will prompt user to enter test mode first. If already entered in
@@ -206,15 +205,19 @@ public class SharedPreferencesItem
 		 */
 		if (preferenceUtils.getBoolean(testModeOpened, false)) {
 
-            final Pair<String, Object> keyValue = (Pair<String, Object>) parent.getItemAtPosition(position);
-            final String valueType = keyValue.second.getClass().getSimpleName();
+			final Pair<String, Object> keyValue = (Pair<String, Object>) parent.getItemAtPosition(position);
+			Object second = keyValue.second;
+			final String valueType = second.getClass().getSimpleName();
 
 			AlertDialog.Builder builder = new Builder(getActivity());
 			View editView = LayoutInflater.from(getActivity()).inflate(R.layout.edit_mode, null);
 			final EditText et_value = (EditText) editView.findViewById(R.id.value);
+			final SwitchCompat booleanSwitch = (SwitchCompat) editView.findViewById(R.id.switchBoolean);
 			Spinner type = (Spinner) editView.findViewById(R.id.type);
 
-            et_value.setText(keyValue.second.toString());
+			final String value = second.toString();
+			et_value.setText(value);
+
 
 			OnItemSelectedListener listener = new OnItemSelectedListener() {
 				@Override
@@ -223,40 +226,29 @@ public class SharedPreferencesItem
 						et_value.setText("");
 						typePosition = position;
 					}
+					booleanSwitch.setVisibility(View.GONE);
+					et_value.setVisibility(View.VISIBLE);
 
-					et_value.setFocusable(true);
+					if (typePosition == SharedPreferenceUtils.SPINNER_STRING) {
+						et_value.setInputType(InputType.TYPE_CLASS_TEXT);
 
-					switch (typePosition) {
-						case SharedPreferenceUtils.SPINNER_STRING:
-							et_value.setInputType(InputType.TYPE_CLASS_TEXT);
-							break;
-						case SharedPreferenceUtils.SPINNER_INT:
-						case SharedPreferenceUtils.SPINNER_LONG:
-							et_value.setInputType(InputType.TYPE_CLASS_NUMBER);
-							break;
-						case SharedPreferenceUtils.SPINNER_FLOAT:
-							et_value.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-							break;
-						case SharedPreferenceUtils.SPINNER_BOOLEAN:
-							et_value.setFocusable(false);
+					} else if (typePosition == SharedPreferenceUtils.SPINNER_INT || typePosition == SharedPreferenceUtils.SPINNER_LONG) {
+						et_value.setInputType(InputType.TYPE_CLASS_NUMBER);
+					} else if (typePosition == SharedPreferenceUtils.SPINNER_FLOAT) {
+						et_value.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-							InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.hideSoftInputFromWindow(et_value.getWindowToken(), 0);
-
-							et_value.setOnClickListener(new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-
-									AlertDialog.Builder trueFalseBuilder = new Builder(getActivity());
-									trueFalseBuilder.setTitle("Choose Option").setItems(trueFalse, new OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											et_value.setText(trueFalse[which]);
-										}
-									}).show();
-								}
-							});
-							break;
+					} else if (typePosition == SharedPreferenceUtils.SPINNER_BOOLEAN) {
+						et_value.setVisibility(View.GONE);
+						booleanSwitch.setVisibility(View.VISIBLE);
+						boolean isPreferenceTrue = !ConstantMethods.isEmptyString(value) && value.equalsIgnoreCase("true");
+						booleanSwitch.setText(isPreferenceTrue? "true" : "false");
+						booleanSwitch.setChecked(isPreferenceTrue);
+						booleanSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+							@Override
+							public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+								buttonView.setText(isChecked ? "true" : "false");
+							}
+						});
 					}
 				}
 
@@ -283,88 +275,74 @@ public class SharedPreferencesItem
 				}
 			};
 
-			if(valueType.equalsIgnoreCase(SharedPreferenceUtils.INT)) {
-                typePosition = SharedPreferenceUtils.SPINNER_INT;
+			if (valueType.equalsIgnoreCase(SharedPreferenceUtils.INT)) {
+				typePosition = SharedPreferenceUtils.SPINNER_INT;
 				type.setSelection(SharedPreferenceUtils.SPINNER_INT);
-			} else if(valueType.equalsIgnoreCase(SharedPreferenceUtils.LONG)){
-                typePosition = SharedPreferenceUtils.SPINNER_LONG;
+			} else if (valueType.equalsIgnoreCase(SharedPreferenceUtils.LONG)) {
+				typePosition = SharedPreferenceUtils.SPINNER_LONG;
 				type.setSelection(SharedPreferenceUtils.SPINNER_LONG);
-			} else if(valueType.equalsIgnoreCase(SharedPreferenceUtils.FLOAT)){
-                typePosition = SharedPreferenceUtils.SPINNER_FLOAT;
+			} else if (valueType.equalsIgnoreCase(SharedPreferenceUtils.FLOAT)) {
+				typePosition = SharedPreferenceUtils.SPINNER_FLOAT;
 				type.setSelection(SharedPreferenceUtils.SPINNER_FLOAT);
-			} else if(valueType.equalsIgnoreCase(SharedPreferenceUtils.BOOLEAN)){
-                typePosition = SharedPreferenceUtils.SPINNER_BOOLEAN;
+			} else if (valueType.equalsIgnoreCase(SharedPreferenceUtils.BOOLEAN)) {
+				typePosition = SharedPreferenceUtils.SPINNER_BOOLEAN;
 				type.setSelection(SharedPreferenceUtils.SPINNER_BOOLEAN);
-			} else if(valueType.equalsIgnoreCase(SharedPreferenceUtils.STRING)){
-                typePosition = SharedPreferenceUtils.SPINNER_STRING;
+			} else if (valueType.equalsIgnoreCase(SharedPreferenceUtils.STRING)) {
+				typePosition = SharedPreferenceUtils.SPINNER_STRING;
 				type.setSelection(SharedPreferenceUtils.SPINNER_STRING);
 			}
 
-            final AlertDialog dialog = builder.setTitle("Change Value").setView(editView).setPositiveButton("Set", null).setNegativeButton(cancel, listener2)
-			       .setNeutralButton("Clear", clearListener).create();
+			final AlertDialog dialog =
+					builder.setTitle("Change Value").setView(editView).setPositiveButton("Set", null).setNegativeButton(cancel, listener2)
+					       .setNeutralButton("Clear", clearListener).create();
 
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+			dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
-                @Override
-                public void onShow(DialogInterface dialog1) {
+				@Override
+				public void onShow(DialogInterface dialog1) {
 
-                    Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    b.setOnClickListener(new View.OnClickListener() {
+					Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+					b.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
+						@Override
+						public void onClick(View view) {
 
-                            storeOriginal(keyValue);
-                            Editable text = et_value.getText();
+							storeOriginal(keyValue);
+							Editable text = et_value.getText();
 
-                            switch (typePosition) {
-                                case SharedPreferenceUtils.SPINNER_STRING:
-                                    preferenceUtils.putString(keyValue.first, String.valueOf(text));
-                                    dialog.dismiss();
-                                    break;
-                                case SharedPreferenceUtils.SPINNER_INT:
-                                    try {
-                                        int number = SharedPreferenceUtils.getNumber(text);
-                                        preferenceUtils.putInt(keyValue.first, number);
-                                        dialog.dismiss();
-                                    } catch(Exception e) {
-                                        showToast(SharedPreferenceUtils.INT);
-                                    }
-                                    break;
-                                case SharedPreferenceUtils.SPINNER_LONG:
-                                    try {
-                                        long numberLong = SharedPreferenceUtils.getNumberLong(text);
-                                        preferenceUtils.putLong(keyValue.first, numberLong);
-                                        dialog.dismiss();
-                                    } catch(Exception e) {
-                                        showToast(SharedPreferenceUtils.LONG);
-                                    }
-                                    break;
-                                case SharedPreferenceUtils.SPINNER_BOOLEAN:
-                                    boolean value = false;
-                                    if (!SharedPreferenceUtils.isEmptyString(text)) {
-                                        value = text.toString().equalsIgnoreCase("true");
-                                    }
-                                    preferenceUtils.putBoolean(keyValue.first, value);
-                                    dialog.dismiss();
-                                    break;
-                                case SharedPreferenceUtils.SPINNER_FLOAT:
-                                    try {
-                                        float numberFloat = SharedPreferenceUtils.getNumberFloat(text);
-                                        preferenceUtils.putFloat(keyValue.first, numberFloat);
-                                        dialog.dismiss();
-                                    } catch(Exception e) {
-                                        showToast(SharedPreferenceUtils.FLOAT);
-                                    }
-                                    break;
-                            }
-                            refreshKeyValues();
-                        }
-                    });
-                }
-            });
+							switch (typePosition) {
+								case SharedPreferenceUtils.SPINNER_STRING:
+									preferenceUtils.putString(keyValue.first, String.valueOf(text));
+									dialog.dismiss();
+									break;
+								case SharedPreferenceUtils.SPINNER_INT:
+									int number = SharedPreferenceUtils.getNumber(text);
+									preferenceUtils.putInt(keyValue.first, number);
+									dialog.dismiss();
+									break;
+								case SharedPreferenceUtils.SPINNER_LONG:
+									long numberLong = SharedPreferenceUtils.getNumberLong(text);
+									preferenceUtils.putLong(keyValue.first, numberLong);
+									dialog.dismiss();
+									break;
+								case SharedPreferenceUtils.SPINNER_BOOLEAN:
+									boolean value = booleanSwitch.isChecked();
+									preferenceUtils.putBoolean(keyValue.first, value);
+									dialog.dismiss();
+									break;
+								case SharedPreferenceUtils.SPINNER_FLOAT:
+									float numberFloat = SharedPreferenceUtils.getNumberFloat(text);
+									preferenceUtils.putFloat(keyValue.first, numberFloat);
+									dialog.dismiss();
+									break;
+							}
+							refreshKeyValues();
+						}
+					});
+				}
+			});
 
-            dialog.show();
+			dialog.show();
 		} else {
 			AlertDialog.Builder builder = new Builder(getActivity());
 			builder.setTitle("Test mode not enabled")
@@ -372,7 +350,9 @@ public class SharedPreferencesItem
 			       .setPositiveButton("Enable test mode", new OnClickListener() {
 				       @Override
 				       public void onClick(DialogInterface dialog, int which) {
+					       getActivity().supportInvalidateOptionsMenu();
 					       changeTestMode();
+					       onItemClick(parent, view, position, id);
 				       }
 			       }).setNegativeButton(cancel, new OnClickListener() {
 				@Override
@@ -409,7 +389,6 @@ public class SharedPreferencesItem
 		if (SharedPreferenceUtils.isEmptyString(name)) {
 			preferenceUtils = SharedPreferenceUtils.initWith(getActivity(), null);
 		} else {
-			prefName = name;
 			preferenceUtils = SharedPreferenceUtils.initWith(getActivity(), name);
 		}
 		ArrayList<Pair<String, ?>> keyValPair = getKeyValues();
@@ -419,13 +398,5 @@ public class SharedPreferencesItem
 		preferencesList.setOnItemClickListener(this);
 	}
 
-    void showToast(String type) {
-
-        if(toast != null)
-            toast.cancel();
-
-        toast = Toast.makeText(getActivity(), "Please enter a valid " + type + ".", Toast.LENGTH_SHORT);
-        toast.show();
-    }
 
 }
