@@ -1,4 +1,6 @@
 # ChangeLog
+## 2.3
+- Fixed Issue #4.
 ## 2.2
 - Edit Dialog launches with selected preference datatype in spinner. (Credit @maheshwaranapk)
 - Added new icon for menu

@@ -74,7 +74,7 @@ If you are using proguard, you should add this line in your proguard file. In ca
 `-keep class android.support.v7.widget.SearchView { *; }`
 
 # ChangeLog
-See ChangeLog.md
+See [Change Log](ChangeLog.md)
 
 # Credits
 Credits to [Android DbInspector Library](https://github.com/infinum/android_dbinspector) for all the inspiration behind this library.
