@@ -1,8 +1,9 @@
 # ChangeLog
 ## 2.3
-- Fixed Issue #4.
+- Fixed Issue #4
+
 ## 2.2
-- Edit Dialog launches with selected preference datatype in spinner. (Credit @maheshwaranapk)
+- Edit Dialog launches with selected preference datatype in spinner. (Credit [@maheshwaranapk](https://github.com/maheswaranapk) )
 - Added new icon for menu
 - SharedPreference activity new respect application's theme (Which requires to be a child of AppCompat theme)
 - Changing to boolean present a switch to set true or false
