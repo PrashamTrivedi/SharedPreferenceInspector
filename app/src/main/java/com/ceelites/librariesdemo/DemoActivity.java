@@ -1,16 +1,19 @@
 package com.ceelites.librariesdemo;
 
 import android.content.SharedPreferences;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.squareup.seismic.ShakeDetector;
+
 
 public class DemoActivity
-		extends ActionBarActivity {
+		extends AppCompatActivity implements ShakeDetector.Listener {
 
 
 	@Override
@@ -18,14 +21,19 @@ public class DemoActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo);
 		SharedPreferences defualtPref = PreferenceManager.getDefaultSharedPreferences(this);
-		defualtPref.edit().putString("Test", "Done").commit();
+		defualtPref.edit().putString("Test", "Done").apply();
 
 		SharedPreferences anotherPref = getSharedPreferences("Prasham", MODE_PRIVATE);
-		anotherPref.edit().putString("Test", "Love you life").commit();
-		anotherPref.edit().putInt("Test Int", 1138).commit();
-		anotherPref.edit().putFloat("Test Float", 11.38F).commit();
-		anotherPref.edit().putLong("Test Long", 113834).commit();
-		anotherPref.edit().putBoolean("Test Boolean", true).commit();
+		anotherPref.edit().putString("Test", "Love you life").apply();
+		anotherPref.edit().putInt("Test Int", 1138).apply();
+		anotherPref.edit().putFloat("Test Float", 11.38F).apply();
+		anotherPref.edit().putLong("Test Long", 113834).apply();
+		anotherPref.edit().putBoolean("Test Boolean", true).apply();
+
+
+		SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		ShakeDetector sd = new ShakeDetector(this);
+		sd.start(sensorManager);
 	}
 
 	public void debug(View view) {
@@ -55,5 +63,10 @@ public class DemoActivity
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void hearShake() {
+		LocalDataProvider.startActivity(this);
 	}
 }

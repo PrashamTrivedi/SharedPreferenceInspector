@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 21
+        minSdkVersion 10
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         consumerProguardFiles 'proguard-rules.pro'
@@ -26,6 +26,6 @@ android {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.creativeelites:devUtils:1.4'
 }
