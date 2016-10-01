@@ -6,6 +6,11 @@ Provides a simple way to see shared preferences and edit them for test. No need 
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.prashamtrivedi/sharedpreferenceinspector)
 
+
+- Note: 2.3 is last version distributed through Maven Central, new versions will be moved in JCenter. Additionally JitPack is also supported. You can grab latest versions from JitPack from here.
+
+[![](https://jitpack.io/v/PrashamTrivedi/SharedPreferenceInspector.svg)](https://jitpack.io/#PrashamTrivedi/SharedPreferenceInspector)
+
 # Usage
 
 ## Gradle

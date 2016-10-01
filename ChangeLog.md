@@ -1,4 +1,11 @@
 # ChangeLog
+
+## 2.4
+    ### Alpha 1
+    - Updated to latest support libraries
+    - Closing issue #6
+    - Moving into vector drawables.
+
 ## 2.3
 - Fixed Issue #4
 
